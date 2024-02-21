@@ -1,0 +1,26 @@
+# Configuration des actions GitHub
+
+# Le nom du fichier YAML tel qu'il apparaîtra dans les actions GitHub
+name: Checks
+
+# Exécuter ces actions lors d'un push sur la branche suveillee (poussée de toutes les modifications)
+on: [push]
+
+# Ajouter les tâches que nous voulons exécuter
+jobs: # Section principale où nous définissons les différentes tâches à exécuter.
+  test-lint: # Nom de la première tâche (job) définie.
+    name: Test and Lint # Nom de cette tâche spécifique.
+    runs-on: ubuntu-20.04 # L'environnement d'exécution pour cette tâche est une image Ubuntu 20.04.
+
+    steps: # Liste des étapes à exécuter dans cette tâche.
+      - name: Login to Docker Hub # Première étape, qui utilise l'action Docker pour se connecter à Docker Hub.
+        uses: docker/login-action@v1 # Utiliser l'action Docker pour se connecter à Docker Hub
+        with:  # avec les paramètres spécifiques pour cette connexion.
+          username: ${{ secrets.DOCKERHUB_USER }} # Utiliser le nom d'utilisateur Docker Hub stocké en tant que secret dans GitHub.
+          password: ${{ secrets.DOCKERHUB_TOKEN }} # Utiliser le jeton Docker Hub stocké en tant que secret dans GitHub.
+      - name: Checkout # une autre action de verification du code 
+        uses: action/checkout@v2
+        name: Test # executer les diffents test
+        run: docker-compose run --rm app sh -c "python manage.py test" # executer les tests 
+      - name: Lint # afficher les différentes etapes du travail dans la consol github.
+        run: docker-compose run --rm app sh -c "flake8"
