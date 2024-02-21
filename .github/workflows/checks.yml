@@ -3,7 +3,7 @@
 # Le nom du fichier YAML tel qu'il apparaîtra dans les actions GitHub
 name: Checks
 
-# Exécuter ces actions lors d'un push sur la branche suveillee (poussée de toutes les modifications)
+# Exécuter ces actions lors d'un push sur la branche surveillée (poussée de toutes les modifications)
 on: [push]
 
 # Ajouter les tâches que nous voulons exécuter
@@ -17,9 +17,9 @@ jobs: # Section principale où nous définissons les différentes tâches à ex�
         with:  # avec les paramètres spécifiques pour cette connexion.
           username: ${{ secrets.DOCKERHUB_USER }} # Utiliser le nom d'utilisateur Docker Hub stocké en tant que secret dans GitHub.
           password: ${{ secrets.DOCKERHUB_TOKEN }} # Utiliser le jeton Docker Hub stocké en tant que secret dans GitHub.
-      - name: Checkout # une autre action de verification du code 
-        uses: action/checkout@v2
-        name: Test # executer les diffents test
-        run: docker-compose run --rm app sh -c "python manage.py test" # executer les tests 
-      - name: Lint # afficher les différentes etapes du travail dans la consol github.
+      - name: Checkout # Action de vérification du code.
+        uses: actions/checkout@v2
+      - name: Test # Exécuter les différents tests.
+        run: docker-compose run --rm app sh -c "python manage.py test" # Exécuter les tests.
+      - name: Lint # Afficher les différentes étapes du travail dans la console GitHub.
         run: docker-compose run --rm app sh -c "flake8"
