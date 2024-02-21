@@ -11,7 +11,6 @@ jobs: # Section principale où nous définissons les différentes tâches à ex�
   test-lint: # Nom de la première tâche (job) définie.
     name: Test and Lint # Nom de cette tâche spécifique.
     runs-on: ubuntu-20.04 # L'environnement d'exécution pour cette tâche est une image Ubuntu 20.04.
-
     steps: # Liste des étapes à exécuter dans cette tâche.
       - name: Login to Docker Hub # Première étape, qui utilise l'action Docker pour se connecter à Docker Hub.
         uses: docker/login-action@v1 # Utiliser l'action Docker pour se connecter à Docker Hub
