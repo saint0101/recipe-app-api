@@ -20,14 +20,4 @@ services:
     # Commande à exécuter lors du démarrage du conteneur
     # Correction de la commande avec le nom correct 'manage.py'
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"  
-
-# Définition d'un service nommé "flake8" dans le fichier docker-compose.yml
-  flake8:  # Nom du service
-    build:  # Configuration de la construction de l'image
-      context: .  # Contexte de construction (répertoire courant)
-
-    volumes:  # Configuration des volumes
-      - ./app:/app  # Montage du dossier local './app' dans le dossier '/app' du conteneur
-
-    command: flake8  # Commande à exécuter lors du démarrage du conteneur, ici c'est "flake8"
+      sh -c "python manage.py runserver 0.0.0.0:8000"
