@@ -4,24 +4,41 @@
 name: Checks
 
 # Exécuter ces actions lors d'un push sur la branche surveillée (poussée de toutes les modifications)
-on: [push]
+on:
+  push:
+    branches:
+      - main  # Remplacez "main" par le nom de votre branche surveillée, si nécessaire
 
 # Ajouter les tâches que nous voulons exécuter
-jobs: # Section principale où nous définissons les différentes tâches à exécuter.
-  test-lint: # Nom de la première tâche (job) définie.
-    name: Test and Lint # Nom de cette tâche spécifique.
-    runs-on: ubuntu-20.04 # L'environnement d'exécution pour cette tâche est une image Ubuntu 20.04.
-    steps: # Liste des étapes à exécuter dans cette tâche.
-      - name: Login to Docker Hub # Première étape, qui utilise l'action Docker pour se connecter à Docker Hub.
-        uses: docker/login-action@v1 # Utiliser l'action Docker pour se connecter à Docker Hub
-        with:  # avec les paramètres spécifiques pour cette connexion.
-          username: ${{ secrets.DOCKERHUB_USER }} # Utiliser le nom d'utilisateur Docker Hub stocké en tant que secret dans GitHub.
-        run: echo "The user is $DOCKERHUB_USER"
-          password: ${{ secrets.DOCKERHUB_TOKEN }} # Utiliser le jeton Docker Hub stocké en tant que secret dans GitHub.
-        run: echo "The token is $DOCKERHUB_TOKEN"
-      - name: Checkout # Action de vérification du code.
+jobs:
+  # Section principale où nous définissons les différentes tâches à exécuter.
+  test-lint:
+    # Nom de la première tâche (job) définie.
+    name: Test and Lint
+
+    # L'environnement d'exécution pour cette tâche est une image Ubuntu 20.04.
+    runs-on: ubuntu-20.04
+
+    # Liste des étapes à exécuter dans cette tâche.
+    steps:
+      # Première étape, qui utilise l'action Docker pour se connecter à Docker Hub.
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          # Utiliser le nom d'utilisateur Docker Hub stocké en tant que secret dans GitHub.
+          username: ${{ secrets.DOCKERHUB_USER }}
+
+          # Utiliser le jeton Docker Hub stocké en tant que secret dans GitHub.
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Action de vérification du code.
+      - name: Checkout
         uses: actions/checkout@v2
-      - name: Test # Exécuter les différents tests.
-        run: docker-compose run --rm app sh -c "python manage.py test" # Exécuter les tests.
-      - name: Lint # Afficher les différentes étapes du travail dans la console GitHub.
+
+      # Exécuter les différents tests.
+      - name: Test
+        run: docker-compose run --rm app sh -c "python manage.py test"
+
+      # Afficher les différentes étapes du travail dans la console GitHub.
+      - name: Lint
         run: docker-compose run --rm app sh -c "flake8"
