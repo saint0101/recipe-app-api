@@ -46,5 +46,8 @@ RUN python -m venv /py && \
 # Définir le chemin pour inclure le binaire du Python de l'environnement virtuel
 ENV PATH="/py/bin:$PATH"
 
+# istall flake8
+RUN pip install flake8
+
 # Changer l'utilisateur à "django-user"
 USER django-user
