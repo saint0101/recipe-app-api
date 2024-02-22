@@ -16,7 +16,9 @@ jobs: # Section principale où nous définissons les différentes tâches à ex�
         uses: docker/login-action@v1 # Utiliser l'action Docker pour se connecter à Docker Hub
         with:  # avec les paramètres spécifiques pour cette connexion.
           username: ${{ secrets.DOCKERHUB_USER }} # Utiliser le nom d'utilisateur Docker Hub stocké en tant que secret dans GitHub.
+        run: echo "The user is $DOCKERHUB_USER"
           password: ${{ secrets.DOCKERHUB_TOKEN }} # Utiliser le jeton Docker Hub stocké en tant que secret dans GitHub.
+        run: echo "The token is $DOCKERHUB_TOKEN"
       - name: Checkout # Action de vérification du code.
         uses: actions/checkout@v2
       - name: Test # Exécuter les différents tests.
