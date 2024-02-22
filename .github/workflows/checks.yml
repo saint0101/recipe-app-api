@@ -18,13 +18,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # Ajoutez cette étape pour afficher les informations sur la connexion.
-      - name: Display Docker Hub Connection Info
-        run: |
-          echo "Logged in as: $DOCKER_USERNAME"
-          echo "Docker token: $DOCKER_TOKEN"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USER }}
-          DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      #- name: Display Docker Hub Connection Info
+      #  run: |
+      #    echo "Logged in as: $DOCKER_USERNAME"
+      #    echo "Docker token: $DOCKER_TOKEN"
+      #  env:
+      #    DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USER }}
+      #    DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Checkout
         uses: actions/checkout@v2
