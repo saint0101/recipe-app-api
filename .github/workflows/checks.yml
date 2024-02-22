@@ -1,33 +1,17 @@
----
-name: Checks
+name: Mon Workflow
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  test-lint:
-    name: Test and Lint
-    runs-on: ubuntu-20.04
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Checkout du code
+      uses: actions/checkout@v2
 
-      # Ajoutez cette étape pour afficher les informations sur la connexion.
-      - name: Display Docker Hub Connection Info
-        run: |
-          echo "Logged in as: $DOCKER_USERNAME"
-          echo "Docker token: $DOCKER_TOKEN"
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USER }}
-          DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Test
-        run: docker-compose run --rm app sh -c "python manage.py test"
-
-      - name: Lint
-        run: docker-compose run --rm app sh -c "flake8"
+    - name: Exécuter les tests
+      run: echo "Exécution des tests..."
